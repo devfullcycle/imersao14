@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Route {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  source      Place
+  destination Place
+  distance    Float
+  duration    Float
+  directions  Json
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+  RouteDriver RouteDriver[]
+}
+
+model RouteDriver {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  route      Route    @relation(fields: [route_id], references: [id])
+  route_id   String   @db.ObjectId @unique
+  points     Point[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  //status - iniciado, finalizado
+}
+
+type Point {
+  location   Coord
+  created_at DateTime @default(now())
+}
+
+type Place {
+  name     String
+  location Coord
+}
+
+type Coord {
+  lat Float
+  lng Float
+}
