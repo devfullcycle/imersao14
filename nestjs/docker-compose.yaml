@@ -12,6 +12,8 @@ services:
     image: bitnami/mongodb:5.0.17
     volumes:
       - mongodb_data:/bitnami/mongodb
+    # ports:
+    #   - 27017:27017
     environment:
       MONGODB_ROOT_PASSWORD: root
       MONGODB_REPLICA_SET_MODE: primary
@@ -21,3 +23,9 @@ services:
 volumes:
   mongodb_data:
     driver: local
+
+# outra maneira é:
+
+# rodar o nest.js apenas com o node.js da máquina
+# rodar o next.js apenas com o node.js da máquina
+# rodar o mongodb com docker
