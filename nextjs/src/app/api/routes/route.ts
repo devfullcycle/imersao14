@@ -2,7 +2,7 @@ import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const response = await fetch("http://host.docker.internal:3000/routes", {
+  const response = await fetch(`${process.env.NEST_URL}/routes`, {
     next: {
       revalidate: 1, //cache bem grande, valor bem grande,
       tags: ["routes"], //revalidação de cache sob demanda
@@ -12,7 +12,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const response = await fetch("http://host.docker.internal:3000/routes", {
+  const response = await fetch(`${process.env.NEST_URL}/routes`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

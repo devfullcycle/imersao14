@@ -13,8 +13,8 @@ import { PrometheusModule } from '@willsoto/nestjs-prometheus';
     PrismaModule,
     BullModule.forRoot({
       redis: {
-        host: 'redis',
-        port: 6379,
+        host: process.env.REDIS_HOST,
+        port: parseInt(process.env.REDIS_PORT),
       },
     }),
     RoutesModule,

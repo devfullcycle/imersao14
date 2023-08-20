@@ -26,8 +26,8 @@ export function NewRoutePage() {
     ).value;
 
     const [sourceResponse, destinationResponse] = await Promise.all([
-      fetch(`http://localhost:3001/api/places?text=${source}`),
-      fetch(`http://localhost:3001/api/places?text=${destination}`),
+      fetch(`${process.env.NEXT_PUBLIC_NEXT_API_URL}/places?text=${source}`),
+      fetch(`${process.env.NEXT_PUBLIC_NEXT_API_URL}/places?text=${destination}`),
     ]);
 
     const [sourcePlace, destinationPlace]: FindPlaceFromTextResponseData[] =
@@ -49,7 +49,7 @@ export function NewRoutePage() {
     const placeDestinationId = destinationPlace.candidates[0].place_id;
 
     const directionsResponse = await fetch(
-      `http://localhost:3001/api/directions?originId=${placeSourceId}&destinationId=${placeDestinationId}`
+      `${process.env.NEXT_PUBLIC_NEXT_API_URL}/directions?originId=${placeSourceId}&destinationId=${placeDestinationId}`
     );
     const directionsData: DirectionsResponseData & { request: any } =
       await directionsResponse.json();
@@ -72,7 +72,7 @@ export function NewRoutePage() {
   async function createRoute() {
     const startAddress = directionsData!.routes[0].legs[0].start_address;
     const endAddress = directionsData!.routes[0].legs[0].end_address;
-    const response = await fetch("http://localhost:3001/api/routes", {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_NEXT_API_URL}/routes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -17,17 +17,31 @@ import { makeCounterProvider } from '@willsoto/nestjs-prometheus';
       { name: 'new-points' },
       { name: 'kafka-producer' },
     ),
-    ClientsModule.register([
+    // ClientsModule.register([
+    //   {
+    //     name: 'KAFKA_SERVICE',
+    //     transport: Transport.KAFKA,
+    //     options: {
+    //       client: {
+    //         clientId: 'nest',
+    //         //kafka:9092
+    //         brokers: [process.env.KAFKA_BROKER],
+    //       },
+    //     },
+    //   },
+    // ]),
+    ClientsModule.registerAsync([
       {
         name: 'KAFKA_SERVICE',
-        transport: Transport.KAFKA,
-        options: {
-          client: {
-            clientId: 'nest',
-            //kafka:9092
-            brokers: ['host.docker.internal:9094'],
+        useFactory: () => ({
+          transport: Transport.KAFKA,
+          options: {
+            client: {
+              clientId: 'nest',
+              brokers: [process.env.KAFKA_BROKER],
+            },
           },
-        },
+        }),
       },
     ]),
   ],

@@ -1,13 +1,8 @@
-'use client';
+"use client";
 import { NativeSelect, NativeSelectProps } from "@mui/material";
 import useSWR from "swr";
 import { fetcher } from "../utils/http";
 import { Route } from "../utils/model";
-
-export async function getRoutes(): Promise<Route[]> {
-  const response = await fetch("http://localhost:3001/api/routes");
-  return await response.json();
-}
 
 export type RouteSelectProps = NativeSelectProps & {
   onChange?: (place_id: string) => void;
@@ -18,9 +13,13 @@ export function RouteSelect(props: RouteSelectProps) {
     data: routes,
     error,
     isLoading,
-  } = useSWR<Route[]>("http://localhost:3000/routes", fetcher, {
-    fallbackData: [],
-  });
+  } = useSWR<Route[]>(
+    `${process.env.NEXT_PUBLIC_NEXT_API_URL}/routes`,
+    fetcher,
+    {
+      fallbackData: [],
+    }
+  );
 
   return (
     <NativeSelect
