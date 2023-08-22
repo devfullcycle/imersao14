@@ -7,6 +7,9 @@ services:
       - "3000:3000"
     volumes:
       - .:/home/node/app
+
+  # sempre que precisar parar os container rode o comando:
+  # docker compose down --volumes
   
   db:
     image: bitnami/mongodb:5.0.17
