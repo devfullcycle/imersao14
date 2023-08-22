@@ -23,6 +23,19 @@ services:
       MONGODB_REPLICA_SET_KEY: 123456
       MONGODB_DATABASE: nest
 
+  # se você estiver no MacOs comente o service db acima e descomente o service db abaixo:
+
+  # sempre que precisar parar os container rode o comando:
+  # docker compose down --volumes
+
+  # db:
+  #   build: ./db
+  #   environment:
+  #     MONGO_INITDB_ROOT_PASSWORD: root
+  #     MONGO_REPLICA_HOST: db
+  #   volumes:
+  #      - mongodb_data:/data/db
+
 volumes:
   mongodb_data:
     driver: local
