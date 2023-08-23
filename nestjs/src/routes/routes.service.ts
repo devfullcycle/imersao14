@@ -1,14 +1,20 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateRouteDto } from './dto/create-route.dto';
 import { UpdateRouteDto } from './dto/update-route.dto';
 import { PrismaService } from '../prisma/prisma/prisma.service';
 import { DirectionsService } from '../maps/directions/directions.service';
+import { ClientKafka } from '@nestjs/microservices';
+import { InjectQueue } from '@nestjs/bull';
+import { Queue } from 'bull';
 
 @Injectable()
 export class RoutesService {
   constructor(
     private prismaService: PrismaService,
     private directionsService: DirectionsService,
+    // @Inject('KAFKA_SERVICE')
+    // private kafkaService: ClientKafka,
+    @InjectQueue('kafka-producer') private kafkaProducerQueue: Queue,
   ) {}
 
   async create(createRouteDto: CreateRouteDto) {
@@ -18,7 +24,7 @@ export class RoutesService {
         createRouteDto.destination_id,
       );
     const legs = routes[0].legs[0];
-    return this.prismaService.route.create({
+    const routeCreated = await this.prismaService.route.create({
       data: {
         name: createRouteDto.name,
         source: {
@@ -45,6 +51,18 @@ export class RoutesService {
         }),
       },
     });
+    await this.kafkaProducerQueue.add({
+      event: 'RouteCreated',
+      id: routeCreated.id,
+      name: routeCreated.name,
+    });
+    // await this.kafkaService.emit('route', {
+    //   event: 'RouteCreated',
+    //   id: routeCreated.id,
+    //   name: routeCreated.name,
+    //   distance: routeCreated.distance,
+    // });
+    return routeCreated;
   }
 
   findAll() {
