@@ -9,7 +9,7 @@ services:
     volumes:
       - .:/home/node/app
     extra_hosts:
-      - "host.docker.internal:172.17.0.1"
+      - "host.docker.internal:host-gateway"
 
   # sempre que precisar parar os container rode o comando:
   # docker compose down --volumes
