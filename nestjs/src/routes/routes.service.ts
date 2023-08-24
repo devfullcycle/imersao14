@@ -55,6 +55,7 @@ export class RoutesService {
       event: 'RouteCreated',
       id: routeCreated.id,
       name: routeCreated.name,
+      distance: legs.distance.value
     });
     // await this.kafkaService.emit('route', {
     //   event: 'RouteCreated',
