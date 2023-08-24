@@ -9,22 +9,22 @@ services:
     volumes:
       - .:/home/node/app
     extra_hosts:
-      - "host.docker.internal:172.17.0.1"
+      - "host.docker.internal:host-gateway"
 
   # sempre que precisar parar os container rode o comando:
   # docker compose down --volumes
   
-  db:
-    image: bitnami/mongodb:5.0.17
-    volumes:
-      - mongodb_data:/bitnami/mongodb
-    # ports:
-    #   - 27017:27017
-    environment:
-      MONGODB_ROOT_PASSWORD: root
-      MONGODB_REPLICA_SET_MODE: primary
-      MONGODB_REPLICA_SET_KEY: 123456
-      MONGODB_DATABASE: nest
+  # db:
+  #   image: bitnami/mongodb:5.0.17
+  #   volumes:
+  #     - mongodb_data:/bitnami/mongodb
+  #   # ports:
+  #   #   - 27017:27017
+  #   environment:
+  #     MONGODB_ROOT_PASSWORD: root
+  #     MONGODB_REPLICA_SET_MODE: primary
+  #     MONGODB_REPLICA_SET_KEY: 123456
+  #     MONGODB_DATABASE: nest
   
   redis:
     image: redis:7.0.8-alpine
@@ -34,13 +34,13 @@ services:
   # sempre que precisar parar os container rode o comando:
   # docker compose down --volumes
 
-  # db:
-  #   build: ./db
-  #   environment:
-  #     MONGO_INITDB_ROOT_PASSWORD: root
-  #     MONGO_REPLICA_HOST: db
-  #   volumes:
-  #      - mongodb_data:/data/db
+  db:
+    build: ../db
+    environment:
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_REPLICA_HOST: db
+    volumes:
+       - mongodb_data:/data/db
 
 volumes:
   mongodb_data:
