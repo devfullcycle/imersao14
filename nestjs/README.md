@@ -4,6 +4,10 @@
 
 Repositório do back-end feito com Nest.js (Backend)
 
+## Para Mac M1
+
+Vide `docker-compose.yaml` no projeto para ativar a configuração do MongoDB corretamente para rodar o banco de dados.
+
 ## Rodar a aplicação
 
 Execute os comandos:
