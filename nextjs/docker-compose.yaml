@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    ports:
+      - "3001:3000"
+    volumes:
+      - .:/home/node/app
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    # networks:
+    #   - my-network
+
+
+# outra maneira é:
+
+# rodar o nest.js apenas com o node.js da máquina
+# rodar o next.js apenas com o node.js da máquina
+# rodar o mongodb com docker
+
+# 127.0.0.1 host.docker.internal
+# use o docker engine (não use o docker desktop)
+# Para Windows C:\Windows\system32\drivers\etc\hosts (editar bloco de notas como administrador)
+
+# 2 opcão
+# docker network create my-network
+# networks:
+#   my-network:
+#     external: true

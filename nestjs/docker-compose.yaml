@@ -5,19 +5,33 @@ services:
     build: .
     ports:
       - "3000:3000"
+      - "5555:5555"
     volumes:
       - .:/home/node/app
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
   
   db:
     image: bitnami/mongodb:5.0.17
     volumes:
       - mongodb_data:/bitnami/mongodb
+    # ports:
+    #   - 27017:27017
     environment:
       MONGODB_ROOT_PASSWORD: root
       MONGODB_REPLICA_SET_MODE: primary
       MONGODB_REPLICA_SET_KEY: 123456
       MONGODB_DATABASE: nest
+  
+  redis:
+    image: redis:7.0.8-alpine
 
 volumes:
   mongodb_data:
     driver: local
+
+# outra maneira é:
+
+# rodar o nest.js apenas com o node.js da máquina
+# rodar o next.js apenas com o node.js da máquina
+# rodar o mongodb com docker
