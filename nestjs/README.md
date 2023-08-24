@@ -4,6 +4,14 @@
 
 Repositório do back-end feito com Nest.js (Backend)
 
+## Para Mac M1
+
+Vide `docker-compose.yaml` no projeto para ativar a configuração do MongoDB corretamente para rodar o banco de dados.
+
+## Google API Key
+
+Gere uma API Key no painel do Google Console, é necessário ativar o serviço de `Google Maps API`.
+
 ## Rodar a aplicação
 
 Execute os comandos:

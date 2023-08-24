@@ -55,7 +55,6 @@ export class RoutesDriverService {
     });
 
     if (countRouteDriver === 0) {
-      console.log('aaaaa');
       this.routeStartedCounter.inc();
       await this.kafkaProducerQueue.add({
         event: 'RouteStarted',
