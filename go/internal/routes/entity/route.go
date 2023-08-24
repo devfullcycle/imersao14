@@ -6,7 +6,7 @@ import (
 
 type CustomTime time.Time
 
-const layout = "2006-01-02T15:04"
+const layout = "2006-01-02T15:04:05.999Z"
 
 func (ct *CustomTime) UnmarshalJSON(b []byte) error {
 	s := string(b)
