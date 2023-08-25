@@ -58,9 +58,7 @@ func main() {
 	}
 	defer db.Close()
 	http.Handle("/metrics", promhttp.Handler())
-	go func() {
-		http.ListenAndServe(":8080", nil)
-	}()
+	go http.ListenAndServe(":8080", nil)
 	repository := repository.NewRouteRepositoryMysql(db)
 	freight := entity.NewFreight(10)
 	createRouteUseCase := usecase.NewCreateRouteUseCase(repository, freight)
